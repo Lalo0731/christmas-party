@@ -73,12 +73,14 @@ React.useEffect(() => {
 
   startMusic();
 
-  document.addEventListener("click", startOnInteraction);
-  document.addEventListener("touchstart", startOnInteraction);
+  // document.addEventListener("click", startOnInteraction);
+  // document.addEventListener("touchstart", startOnInteraction);
+  document.addEventListener("pointerdown", startOnInteraction);
 
   return () => {
-    document.removeEventListener("click", startOnInteraction);
-    document.removeEventListener("touchstart", startOnInteraction);
+    // document.removeEventListener("click", startOnInteraction);
+    // document.removeEventListener("touchstart", startOnInteraction);
+    document.removeEventListener("pointerdown", startOnInteraction);
   };
 }, []);
 
