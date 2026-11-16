@@ -134,9 +134,9 @@ function App() {
               ✨ Entrar a la fiesta ✨
             </button>
 
-            <p className="welcome-note">
+            {/* <p className="welcome-note">
               🎵 La música comenzará al entrar
-            </p>
+            </p> */}
           </div>
         </div>
       ) : (
