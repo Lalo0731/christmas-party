@@ -241,7 +241,7 @@ background-repeat: no-repeat;
 }
 
 .invitation-screen {
-  animation: invitationEnter 1.2s ease-out both;
+  animation: invitationEnter 0.45s ease-out both;
 }
 
 @keyframes invitationEnter {
