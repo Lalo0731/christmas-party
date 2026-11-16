@@ -1,7 +1,9 @@
+
 import React from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
 import poster from "./assets/christmas-party-poster.png";
+import christmasSong from "./assets/navidad.mp3";
 
 const WHATSAPP_NUMBER = "529612989610";
 
@@ -10,6 +12,7 @@ function sendRSVP(answer) {
     answer === "yes"
       ? "¡Hola! Confirmo que SÍ asistiré a la Christmas Party del 5 de diciembre a las 7:00 pm. ¡Nos vemos!"
       : "¡Hola! Gracias por la invitación a la Christmas Party del 5 de diciembre. Lamentablemente NO podré asistir. ¡Que se diviertan mucho!";
+
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   window.open(url, "_blank", "noopener,noreferrer");
 }
@@ -36,8 +39,52 @@ function Snow() {
 }
 
 function App() {
+  const [playing, setPlaying] = React.useState(false);
+  const audioRef = React.useRef(null);
+
+  // Intentar reproducir la música automáticamente al abrir la página
+  React.useEffect(() => {
+    const audio = audioRef.current;
+
+    if (!audio) return;
+
+    audio.volume = 0.5;
+
+    audio.play()
+      .then(() => {
+        setPlaying(true);
+      })
+      .catch((error) => {
+        console.log("El navegador requiere interacción para reproducir música:", error);
+        setPlaying(false);
+      });
+  }, []);
+
+  // Botón para reproducir o pausar si el navegador bloquea el autoplay
+  const toggleMusic = async () => {
+    if (!audioRef.current) return;
+
+    if (playing) {
+      audioRef.current.pause();
+      setPlaying(false);
+    } else {
+      try {
+        await audioRef.current.play();
+        setPlaying(true);
+      } catch (error) {
+        console.error("No se pudo reproducir la música:", error);
+      }
+    }
+  };
+
   return (
     <main className="page">
+      <audio ref={audioRef} src={christmasSong} loop preload="auto" />
+
+      <button className="music-button" onClick={toggleMusic}>
+        {playing ? "⏸ Pausar música" : "🎵 Escuchar música"}
+      </button>
+
       <Snow />
       <div className="glow glow-one" />
       <div className="glow glow-two" />
@@ -48,7 +95,10 @@ function App() {
         <p className="intro">¡La Navidad se disfruta más cuando estamos juntos!</p>
 
         <div className="poster-frame">
-          <img src={poster} alt="Invitación ilustrada de Christmas Party con Santa Claus, reno, muñeco de nieve y decoración navideña" />
+          <img
+            src={poster}
+            alt="Invitación ilustrada de Christmas Party con Santa Claus, reno, muñeco de nieve y decoración navideña"
+          />
         </div>
 
         <div className="event-details">
@@ -56,6 +106,7 @@ function App() {
             <span className="detail-icon">📅</span>
             <div><small>FECHA</small><strong>5 de diciembre</strong></div>
           </div>
+
           <div className="detail">
             <span className="detail-icon">🕖</span>
             <div><small>HORA</small><strong>7:00 pm</strong></div>
@@ -69,7 +120,6 @@ function App() {
             aria-label="Abrir ubicación en Google Maps"
           >
             <span className="detail-icon">📍</span>
-
             <div>
               <small>UBICACIÓN</small>
               <strong>
@@ -85,21 +135,31 @@ function App() {
 
           <div className="detail snack">
             <span className="detail-icon">🥂</span>
-            <div><small>UN PEQUEÑO DETALLE</small><strong>Trae una botana o bebidas de tu preferencia.</strong></div>
+            <div>
+              <small>UN PEQUEÑO DETALLE</small>
+              <strong>Trae una botana o bebidas de tu preferencia.</strong>
+            </div>
           </div>
         </div>
 
         <div className="rsvp">
           <p className="rsvp-kicker">Queremos celebrar contigo</p>
           <h2>¿Contamos contigo?</h2>
-          <p className="rsvp-copy">Confirma tu asistencia. Tu respuesta nos llegará directamente por WhatsApp.</p>
+          <p className="rsvp-copy">
+            Confirma tu asistencia. Tu respuesta nos llegará directamente por WhatsApp.
+          </p>
+
           <button className="yes" onClick={() => sendRSVP("yes")}>
             <span>🎅</span> ¡Sí asistiré!
           </button>
+
           <button className="no" onClick={() => sendRSVP("no")}>
             No podré asistir
           </button>
-          <p className="whatsapp-note">💬 Se abrirá WhatsApp con tu respuesta lista para enviar.</p>
+
+          <p className="whatsapp-note">
+            💬 Se abrirá WhatsApp con tu respuesta lista para enviar.
+          </p>
         </div>
 
         <footer>Con cariño y espíritu navideño <span>✦</span></footer>
