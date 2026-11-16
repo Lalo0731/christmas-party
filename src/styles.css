@@ -119,6 +119,37 @@ img {
   object-fit: contain;
 }
 
+
+/* Google Maps */
+.location-link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: background .25s, border-color .25s,
+              transform .25s;
+}
+
+.location-link:hover {
+  background: #ffffff15;
+  border-color: #e6bd70;
+  transform: translateY(-2px);
+}
+
+.map-hint {
+  display: block;
+  margin-top: 7px;
+  color: #e6bd70;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+@media (max-width: 520px) {
+  .map-hint {
+    font-size: 12px;
+  }
+}
+
+
 @media screen and (max-width: 520px) {
   .page {
     padding: 20px 12px 30px;

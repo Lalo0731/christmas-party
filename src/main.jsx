@@ -60,10 +60,29 @@ function App() {
             <span className="detail-icon">🕖</span>
             <div><small>HORA</small><strong>7:00 pm</strong></div>
           </div>
-          <div className="detail location">
+
+          <a
+            className="detail location location-link"
+            href="https://maps.app.goo.gl/QVormhJrrFnR95n97"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Abrir ubicación en Google Maps"
+          >
             <span className="detail-icon">📍</span>
-            <div><small>UBICACIÓN</small><strong>3 Poniente entre 14 y 15 Sur<br />Barrio San Francisco</strong></div>
-          </div>
+
+            <div>
+              <small>UBICACIÓN</small>
+              <strong>
+                3 Poniente entre 14 y 15 Sur
+                <br />
+                Barrio San Francisco
+              </strong>
+              <span className="map-hint">
+                Ver ubicación en Google Maps ↗
+              </span>
+            </div>
+          </a>
+
           <div className="detail snack">
             <span className="detail-icon">🥂</span>
             <div><small>UN PEQUEÑO DETALLE</small><strong>Trae una botana o bebidas de tu preferencia.</strong></div>
