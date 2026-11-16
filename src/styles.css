@@ -162,6 +162,115 @@ img {
   transform: scale(1.05);
 }
 
+
+/* ===== PANTALLA DE BIENVENIDA NAVIDEÑA ===== */
+
+.welcome-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 25px;
+
+background-color: #092d21;
+background-position: center;
+background-size: cover;
+background-repeat: no-repeat;
+}
+
+.welcome-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  padding: 35px 20px;
+  animation: welcomeAppear 1.2s ease both;
+}
+
+.welcome-content h1 {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(45px, 11vw, 68px);
+  color: #fff4df;
+  margin: 25px 0 15px;
+}
+
+.welcome-content h1 em {
+  color: #e6bd70;
+}
+
+.welcome-decoration {
+  font-size: 43px;
+  margin: 25px 0;
+  filter: drop-shadow(0 0 15px #e6bd7066);
+}
+
+.welcome-message {
+  color: #fff4df;
+  font-family: "Playfair Display", serif;
+  font-size: 21px;
+  line-height: 1.6;
+  margin: 25px auto;
+}
+
+.enter-button {
+  display: block;
+  margin: 30px auto 15px;
+  padding: 16px 32px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #b89550, #f1d28d);
+  color: #17251e;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 30px #e6bd7044;
+  transition: transform .25s ease;
+}
+
+.enter-button:hover {
+  transform: scale(1.06);
+}
+
+.welcome-note {
+  color: #d7dfd4;
+  font-size: 12px;
+  margin-top: 18px;
+}
+
+.invitation-screen {
+  animation: invitationEnter 1.2s ease-out both;
+}
+
+@keyframes invitationEnter {
+  0% {
+    opacity: 0;
+    transform: scale(0.94) translateY(20px);
+    filter: blur(6px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes welcomeAppear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
 @media (max-width: 520px) {
   .map-hint {
     font-size: 12px;
