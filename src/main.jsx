@@ -43,39 +43,66 @@ function App() {
   const audioRef = React.useRef(null);
 
   // Intentar reproducir la música automáticamente al abrir la página
-  React.useEffect(() => {
-    const audio = audioRef.current;
 
-    if (!audio) return;
 
-    audio.volume = 0.5;
+React.useEffect(() => {
+  const audio = audioRef.current;
+  if (!audio) return;
 
-    audio.play()
-      .then(() => {
-        setPlaying(true);
-      })
-      .catch((error) => {
-        console.log("El navegador requiere interacción para reproducir música:", error);
-        setPlaying(false);
-      });
-  }, []);
+  audio.volume = 0.5;
+
+  const startMusic = async () => {
+    try {
+      await audio.play();
+      setPlaying(true);
+    } catch (error) {
+      setPlaying(false);
+      console.log("Esperando interacción para reproducir música.");
+    }
+  };
+
+  const startOnInteraction = (event) => {
+    // No iniciar la música si tocaron el botón de música
+    if (event.target.closest(".music-button")) return;
+
+    startMusic();
+
+    document.removeEventListener("click", startOnInteraction);
+    document.removeEventListener("touchstart", startOnInteraction);
+  };
+
+  startMusic();
+
+  document.addEventListener("click", startOnInteraction);
+  document.addEventListener("touchstart", startOnInteraction);
+
+  return () => {
+    document.removeEventListener("click", startOnInteraction);
+    document.removeEventListener("touchstart", startOnInteraction);
+  };
+}, []);
+
+
 
   // Botón para reproducir o pausar si el navegador bloquea el autoplay
-  const toggleMusic = async () => {
-    if (!audioRef.current) return;
 
-    if (playing) {
-      audioRef.current.pause();
+  const toggleMusic = async () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (!audio.paused) {
+      audio.pause();
       setPlaying(false);
     } else {
       try {
-        await audioRef.current.play();
+        await audio.play();
         setPlaying(true);
       } catch (error) {
         console.error("No se pudo reproducir la música:", error);
       }
     }
   };
+
 
   return (
     <main className="page">
